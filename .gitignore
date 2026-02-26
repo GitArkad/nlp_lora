@@ -1,0 +1,40 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+# === Тяжелые модели и чекпоинты ===
+*.pt
+*.bin
+*.safetensors
+*.pth
+*.ckpt
+qwen-cringe-lora/
+models/
+checkpoints/
+offload/
+
+# === Виртуальное окружение ===
+.venv/
+venv/
+.env/
+
+# === Кэш и временные файлы ===
+__pycache__/
+*.pyc
+*.log
+.streamlit/
+.ipynb_checkpoints/
+
+# === Локальные конфиги ===
+.env
+*.local
+.DS_Store
+
+# === Данные (если большие) ===
+data/

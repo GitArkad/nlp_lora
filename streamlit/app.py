@@ -16,8 +16,8 @@ st.markdown("""
 ### 📚 Структура демонстрации
 | Страница | Технология | Задача | Статус |
 |----------|------------|--------|--------|
-| **Классификация отзывов** | TF-IDF + LSTM + BERT | Sentiment Analysis | 🔨 В разработке |
-| **Классификация новостей** | Transformers | Topic Classification | 🔨 В разработке |
+| **Классификация отзывов** | TF-IDF + LSTM + BERT | Sentiment Analysis | ✅ Готово |
+| **Классификация новостей** | Transformers | Topic Classification | ✅ Готово |
 | **Генерация текста (LLM)** | Qwen + QLoRA (4-bit) | Text Generation | ✅ Готово |
 
 ### 🛠 Технологический стек

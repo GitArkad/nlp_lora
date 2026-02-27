@@ -8,13 +8,11 @@ wheels/
 
 
 # === Тяжелые модели и чекпоинты ===
-*.pt
 *.bin
 *.safetensors
 *.pth
 *.ckpt
 qwen-cringe-lora/
-models/
 checkpoints/
 offload/
 
@@ -36,3 +34,4 @@ __pycache__/
 # === Данные (если большие) ===
 data/
 lora/
+models/

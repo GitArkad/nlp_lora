@@ -6,8 +6,7 @@ dist/
 wheels/
 *.egg-info
 
-# Virtual environments
-.venv
+
 # === Тяжелые модели и чекпоинты ===
 *.pt
 *.bin
@@ -20,9 +19,7 @@ checkpoints/
 offload/
 
 # === Виртуальное окружение ===
-.venv/
-venv/
-.env/
+
 
 # === Кэш и временные файлы ===
 __pycache__/
@@ -38,3 +35,4 @@ __pycache__/
 
 # === Данные (если большие) ===
 data/
+lora/

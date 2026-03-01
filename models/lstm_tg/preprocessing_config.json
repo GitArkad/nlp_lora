@@ -1,0 +1,5 @@
+{
+  "max_len": 200,
+  "padding_value": 0,
+  "tokenizer": "simple"
+}

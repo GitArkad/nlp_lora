@@ -1,0 +1,5 @@
+{
+  "num_labels": 5,
+  "model_name": "cointegrated/rubert-tiny2",
+  "hidden_size": 312
+}

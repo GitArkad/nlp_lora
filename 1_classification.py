@@ -4,6 +4,12 @@ import time
 import pandas as pd
 import json
 from utils import page_header
+from huggingface_hub import hf_hub_download
+import joblib
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # === 🔥 ИНИЦИАЛИЗАЦИЯ SESSION_STATE ===
 if "stats" not in st.session_state:
@@ -38,8 +44,7 @@ page_header("Классификация отзывов на поликлиник
 # === Загрузка модели ===
 @st.cache_resource
 def load_model_cached(model_name, repo_id):
-    from huggingface_hub import hf_hub_download
-    import torch
+    token = os.getenv("HF_TOKEN")
 
     try:
         # === LOGREG ===
@@ -48,7 +53,9 @@ def load_model_cached(model_name, repo_id):
 
             pkl_path = hf_hub_download(
                 repo_id=repo_id,
-                filename="baseline_model.pkl"
+                filename="baseline_model.pkl",
+                repo_type="model",
+                token=token,
             )
 
             model = joblib.load(pkl_path)
@@ -60,10 +67,18 @@ def load_model_cached(model_name, repo_id):
             from lstm_model import LSTMClassifier
             import json
 
-            # загружаем три файла
-            cfg_path = hf_hub_download(repo_id=repo_id, filename="lstm_config.json")
-            vocab_path = hf_hub_download(repo_id=repo_id, filename="vocab_LSTM.json")
-            weights_path = hf_hub_download(repo_id=repo_id, filename="best_lstm_model.pt")
+            cfg_path = hf_hub_download(
+                repo_id=repo_id, filename="lstm_config.json",
+                repo_type="model", token=token
+            )
+            vocab_path = hf_hub_download(
+                repo_id=repo_id, filename="vocab_LSTM.json",
+                repo_type="model", token=token
+            )
+            weights_path = hf_hub_download(
+                repo_id=repo_id, filename="best_lstm_model.pt",
+                repo_type="model", token=token
+            )
 
             with open(cfg_path, "r", encoding="utf8") as f:
                 cfg = json.load(f)
@@ -71,7 +86,6 @@ def load_model_cached(model_name, repo_id):
             with open(vocab_path, "r", encoding="utf8") as f:
                 vocab = json.load(f)
 
-            # создаём модель
             model = LSTMClassifier(
                 vocab_size=cfg["vocab_size"],
                 embedding_dim=cfg["embedding_dim"],
@@ -89,10 +103,11 @@ def load_model_cached(model_name, repo_id):
         elif "BERT" in model_name:
             from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-            tokenizer = AutoTokenizer.from_pretrained(repo_id)
+            tokenizer = AutoTokenizer.from_pretrained(repo_id, token=token)
             model = AutoModelForSequenceClassification.from_pretrained(
                 repo_id,
-                output_attentions=True
+                output_attentions=True,
+                token=token
             )
             model.eval()
 
@@ -382,9 +397,3 @@ with col_table:
 st.divider()
 st.caption("🏥 Бинарная классификация отзывов | NLP demo")
 
-
-
-import joblib
-model = joblib.load("./models/reviews/baseline_model.pkl")
-print(model.predict(["Очень долго ждал приема, грубый персонал."]))
-print(model.predict_proba(["Очень долго ждал приема, грубый персонал."]))
